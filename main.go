@@ -50,10 +50,19 @@ func insertMapping(key string, u string) {
 	urlMapper.Mapping[key] = u
 }
 
+func redirectHandler(w http.ResponseWriter, r http.Request) {
+	key := chi.URLParam(r, "key")
+	if key == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("url field is empty."))
+	}
+}
+
 func main() {
 	// Code
 	r := chi.NewRouter()
-	r.Post("/short-it", createShortURL)
+	r.Post("/short-it", createShortURLHandler)
+	r.Get("/short/{key}", redirectHandler)
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Server is running...."))
 	})
