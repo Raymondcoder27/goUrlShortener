@@ -25,6 +25,7 @@ func createShortURLHandler(w http.ResponseWriter, r *http.Request) {
 	u := r.Form.Get("URL")
 	if u == "" {
 		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("url field is empty."))
 	}
 }
 
