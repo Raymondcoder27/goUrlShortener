@@ -2,9 +2,23 @@ package main
 
 import (
 	"net/http"
+	"sync"
 
 	"github.com/go-chi/chi"
 )
+
+type Mapper struct {
+	Mapping map[string]string
+	Lock    sync.Mutex
+}
+
+var urlMapper Mapper
+
+func init(){
+	urlMapper = Mapper{
+		Mapping: make(map[string]string)
+	}
+}
 
 func main() {
 	// Code
