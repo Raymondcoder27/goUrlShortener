@@ -7,6 +7,7 @@ import (
 	"sync"
 
 	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/lithammer/shortuuid/v4"
 )
 
@@ -75,6 +76,7 @@ func fetchMapping(key string) string {
 func main() {
 	// Code
 	r := chi.NewRouter()
+	r.Use(middleware.Logger)
 	r.Post("/short-it", createShortURLHandler)
 	r.Get("/short/{key}", redirectHandler)
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
