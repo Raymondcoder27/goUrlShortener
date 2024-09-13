@@ -16,7 +16,15 @@ var urlMapper Mapper
 
 func init() {
 	urlMapper = Mapper{
-		Mapping: make(map[string]string)
+		Mapping: make(map[string]string),
+	}
+}
+
+func createShortURLHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	u := r.Form.Get("URL")
+	if u == "" {
+		w.WriteHeader(http.StatusBadRequest)
 	}
 }
 
