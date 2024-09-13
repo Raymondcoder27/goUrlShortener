@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 	"sync"
 
@@ -30,6 +32,14 @@ func createShortURLHandler(w http.ResponseWriter, r *http.Request) {
 
 	//generate key
 	key := shortuuid.New()
+
+	//insert
+	insertMapping(key, u)
+
+	log.Println("url mapped")
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(fmt.Sprintf("http:localhost:3000/short/%s", key)))
 }
 
 func insertMapping(key string, u string) {
