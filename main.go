@@ -50,12 +50,21 @@ func insertMapping(key string, u string) {
 	urlMapper.Mapping[key] = u
 }
 
-func redirectHandler(w http.ResponseWriter, r http.Request) {
+func redirectHandler(w http.ResponseWriter, r *http.Request) {
 	key := chi.URLParam(r, "key")
 	if key == "" {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("url field is empty."))
+		w.Write([]byte("key field is empty."))
 	}
+
+	http.Redirect(w, r, u, http.StatusFound)
+}
+
+func fetchMapping(key string) string {
+	urlMapper.Lock.Lock()
+	defer urlMapper.Lock.Unlock()
+
+	return urlMapper.Mapping[key]
 }
 
 func main() {
