@@ -57,6 +57,11 @@ func redirectHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("key field is empty."))
 	}
 
+	u := fetchMapping(key)
+	if u == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("u field is empty."))
+	}
 	http.Redirect(w, r, u, http.StatusFound)
 }
 
