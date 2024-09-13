@@ -30,6 +30,7 @@ func createShortURLHandler(w http.ResponseWriter, r *http.Request) {
 	if u == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("url field is empty."))
+		return
 	}
 
 	//generate key
@@ -56,12 +57,14 @@ func redirectHandler(w http.ResponseWriter, r *http.Request) {
 	if key == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("key field is empty."))
+		return
 	}
 
 	u := fetchMapping(key)
 	if u == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("u field is empty."))
+		return
 	}
 	http.Redirect(w, r, u, http.StatusFound)
 }
