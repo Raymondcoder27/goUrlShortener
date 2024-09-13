@@ -16,7 +16,7 @@ var urlMapper Mapper
 
 func init() {
 	urlMapper = Mapper{
-		Mapping: make(map[string]string),
+		Mapping: make(map[string]string)
 	}
 }
 
