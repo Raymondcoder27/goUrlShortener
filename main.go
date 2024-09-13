@@ -27,11 +27,22 @@ func createShortURLHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("url field is empty."))
 	}
+
+	//generate key
+	key := shortuuid.New()
+}
+
+func insertMapping(key string, u string) {
+	urlMapper.Lock.Lock()
+	defer urlMapper.Lock.Unlock()
+
+	urlMapper.Mapping[key] = u
 }
 
 func main() {
 	// Code
 	r := chi.NewRouter()
+	r.Post("/short-it", createShortURL)
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Server is running...."))
 	})
