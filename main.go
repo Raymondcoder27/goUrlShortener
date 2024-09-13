@@ -7,6 +7,7 @@ import (
 	"sync"
 
 	"github.com/go-chi/chi"
+	"github.com/lithammer/shortuuid/v4"
 )
 
 type Mapper struct {
